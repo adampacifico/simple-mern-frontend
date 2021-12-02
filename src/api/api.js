@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "http://localhost:1000/persons";
+const url = "https://simple-crud-backend.herokuapp.com/persons";
 
 export const readPersons = () => axios.get(url);
 export const createPerson = (newPerson) => axios.post(url, newPerson);
