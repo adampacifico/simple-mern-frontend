@@ -9,11 +9,13 @@ import {
 } from "./api/api";
 import { useEffect, useState } from "react";
 
+import Loader from "react-loader-spinner";
+
 function App() {
   const [person, setPerson] = useState({
     lastname: "",
     firstname: "",
-    age: "",
+    title: "",
     description: "",
   });
   const [records, setRecords] = useState([]);
@@ -23,7 +25,7 @@ function App() {
     const currentPerson =
       currentId !== 0
         ? records.find((person) => person._id === currentId)
-        : { lastname: "", firstname: "", age: "", description: "" };
+        : { lastname: "", firstname: "", title: "", description: "" };
     setPerson(currentPerson);
   }, [currentId]);
 
@@ -33,7 +35,7 @@ function App() {
       setRecords(result.data);
     };
     fetchData();
-  }, [records]);
+  }, [person, records]);
 
   // create hander
   const btnSubmit = async () => {
@@ -51,40 +53,55 @@ function App() {
     const personRec = [...records];
     personRec.filter((record) => record._id !== id);
     setRecords(personRec);
+    console.log("hey");
   };
 
   function clearFields() {
-    setPerson({ lastname: "", firstname: "", age: "", description: "" });
+    setPerson({ lastname: "", firstname: "", title: "", description: "" });
   }
   return (
     <Container>
       {/* <Title>Simple Crud App</Title> */}
       <Forms setPerson={setPerson} person={person} btnSubmit={btnSubmit} />
       <Records>
-        {records
-          .sort((a, b) => a.datecreated - b.datecreated)
-          .map((rec, i) => (
-            <Lists
-              key={i}
-              records={rec}
-              deleteHandler={deleteHandler}
-              setCurrentId={setCurrentId}
-            />
-          ))}
+        {records.length > 0 ? (
+          records
+            .sort((a, b) => b.datecreated < a.datecreated)
+            .map((rec, i) => (
+              <Lists
+                key={i}
+                records={rec}
+                deleteHandler={deleteHandler}
+                setCurrentId={setCurrentId}
+              />
+            ))
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              height: "100%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+            <h2>Post A Memory</h2>
+          </div>
+        )}
       </Records>
     </Container>
   );
 }
 
 const Container = styled.div`
-  width: 80%;
-  border: 2px blue solid;
+  width: 90%;
   height: 95vh;
   margin: 20px auto;
   padding: 20px;
   display: flex;
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     display: block;
   }
 `;
@@ -95,9 +112,9 @@ const Records = styled.ul`
   flex-direction: column-reverse;
   height: fit-content;
   max-height: 90vh;
-  padding: 10px;
   overflow-y: scroll;
   overflow-x: hidden;
+  padding-right: 20px;
   ::-webkit-scrollbar {
     width: 10px;
   }
@@ -107,8 +124,15 @@ const Records = styled.ul`
   ::-webkit-scrollbar-thumb {
     background: #888;
   }
+  h2 {
+    margin-left: 10px;
+  }
+  @media (max-width: 768px) {
+    margin-top: 15px;
+    padding: 0;
+    display: block;
+    overflow: unset;
+  }
 `;
-// const Title = styled.div`
-//   text-align: center;
-// `;
+
 export default App;

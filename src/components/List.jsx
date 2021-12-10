@@ -2,28 +2,27 @@ import React from "react";
 import styled from "styled-components";
 import { Button } from "reactstrap";
 import { FaTrash, FaRegEdit } from "react-icons/fa";
-import moment from "moment"
+import { BiTime } from "react-icons/bi";
+import moment from "moment";
 const List = ({ records, setCurrentId, deleteHandler }) => {
-
   return (
     <Record>
-      {/* {console.log(records.createdAt)} */}
-      <div style={{ flexBasis: "90%", display: "flex", justifyContent: "space-around", flexDirection: "column" }}>
-        <Details>
-          <div>
-            {records.lastname}, {records.firstname} <span>({records.age})</span>
-          </div>
-        </Details>
-        <Description>"{records.description}"</Description>
-        <span style={{ fontSize: "12px", fontStyle: "italic"}}>{moment(records.createdAt).calendar()}</span>
-
+      <img src={records.selectedFile} alt="posted" />
+      <p className="name">
+        {records.firstname} {records.lastname}
+      </p>
+      <div className="time">
+        <BiTime />
+        <span>{moment(records.createdAt).fromNow()}</span>
       </div>
+      <hr />
+      <p>" {records.description} "</p>
       <Btn>
         <Button color="success">
           <FaRegEdit onClick={() => setCurrentId(records._id)} />
         </Button>
         <Button color="danger">
-          <FaTrash onClick={()=>deleteHandler(records._id)} />
+          <FaTrash onClick={() => deleteHandler(records._id)} />
         </Button>
       </Btn>
     </Record>
@@ -31,40 +30,50 @@ const List = ({ records, setCurrentId, deleteHandler }) => {
 };
 const Record = styled.li`
   border: 1px solid black;
+  border-radius: 5px;
   width: 100%;
-  margin: 5px;
+  margin: 0 5px 10px;
   padding: 10px;
-  display: flex;
-  height: 150px;
   text-transform: capitalize;
-  /* flex-direction: column; */
-`;
-const Details = styled.div`
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid lightgrey;
-  padding: 8px 0;
-  width: 100%;
-  span {
-    color: grey;
-    font-style: italic;
-  }
-`;
 
-const Description = styled.div`
-  font-style: italic;
-  padding: 8px 0;
+  .name {
+    font-weight: bold;
+    margin: 0;
+  }
+  svg {
+    height: 15px;
+  }
+  img {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  hr {
+    margin: 5px 0 10px 0;
+  }
+  .time {
+    color: gray;
+    font-style: italic;
+    font-size: 10px;
+    span {
+      text-transform: lowercase;
+      margin-left: 8px;
+    }
+  }
 `;
 
 const Btn = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: end;
-  flex-direction: column;
-  width: 100px;
+  align-items: space-between;
+  width: 100%;
+
   button {
-    height: 100%;
+    height: 30px;
+    width: 150px;
     margin: 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
