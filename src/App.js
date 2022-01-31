@@ -109,7 +109,8 @@ const Records = styled.ul`
   list-style-type: none;
   flex-basis: 60%;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
+  justify-content: flex-start;
   height: fit-content;
   max-height: 90vh;
   overflow-y: scroll;
