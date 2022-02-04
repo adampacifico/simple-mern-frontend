@@ -12,42 +12,42 @@ const Forms = ({ setPerson, person, btnSubmit }) => {
           md={12}
           style={{ display: "flex", justifyContent: "space-between" }}
         >
-            <FormGroup floating>
-              <Input
-                // style={{ width: "98%" }}
-                value={person.firstname}
-                id="firstname"
-                name="firstname"
-                placeholder="firstname"
-                type="firstname"
-                onChange={(e) =>
-                  setPerson({ ...person, firstname: e.target.value })
-                }
-              />
-              <Label for="firstname">First name</Label>
-            </FormGroup>
-            <FormGroup floating>
-              <Input
-                value={person.lastname}
-                id="lastname"
-                name="lastname"
-                placeholder="lastname"
-                type="lastname"
-                onChange={(e) =>
-                  setPerson({ ...person, lastname: e.target.value })
-                }
-              />
-              <Label for="lastname">Last name</Label>
-            </FormGroup>
+          <FormGroup floating>
+            <Input
+              // style={{ width: "98%" }}
+              value={person.firstname}
+              id="firstname"
+              name="firstname"
+              placeholder="firstname"
+              type="firstname"
+              onChange={(e) =>
+                setPerson({ ...person, firstname: e.target.value })
+              }
+            />
+            <Label for="firstname">First name</Label>
+          </FormGroup>
+          <FormGroup floating>
+            <Input
+              value={person.lastname}
+              id="lastname"
+              name="lastname"
+              placeholder="lastname"
+              type="lastname"
+              onChange={(e) =>
+                setPerson({ ...person, lastname: e.target.value })
+              }
+            />
+            <Label for="lastname">Last name</Label>
+          </FormGroup>
           {/* </Col> */}
         </Col>
         <FormGroup floating>
           <Input
-            value={person.Title}
-            id="Title"
-            name="Title"
-            placeholder="Title"
-            type="Title"
+            value={person.title}
+            id="title"
+            name="title"
+            placeholder="title"
+            type="title"
             onChange={(e) => setPerson({ ...person, title: e.target.value })}
           />
           <Label for="Title">Title</Label>
@@ -90,6 +90,7 @@ const Forms = ({ setPerson, person, btnSubmit }) => {
 };
 
 const Main = styled.div`
-  flex-basis: 40%;
+  flex-basis: 50%;
+  max-width: 450px;
 `;
 export default Forms;

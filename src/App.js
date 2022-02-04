@@ -35,12 +35,14 @@ function App() {
       setRecords(result.data);
     };
     fetchData();
-  }, [person, records]);
+    // console.log("1")
+  }, [records]);
 
   // create hander
   const btnSubmit = async () => {
     if (currentId === 0) {
       await createPerson(person);
+      setRecords(...records, person);
     } else {
       await updatePerson(currentId, person);
     }
@@ -52,8 +54,7 @@ function App() {
     await deletePerson(id);
     const personRec = [...records];
     personRec.filter((record) => record._id !== id);
-    setRecords(personRec);
-    console.log("hey");
+    // setRecords(personRec);
   };
 
   function clearFields() {
@@ -64,17 +65,16 @@ function App() {
       {/* <Title>Simple Crud App</Title> */}
       <Forms setPerson={setPerson} person={person} btnSubmit={btnSubmit} />
       <Records>
+        {/* {console.log(records)} */}
         {records.length > 0 ? (
-          records
-            .sort((a, b) => b.datecreated < a.datecreated)
-            .map((rec, i) => (
-              <Lists
-                key={i}
-                records={rec}
-                deleteHandler={deleteHandler}
-                setCurrentId={setCurrentId}
-              />
-            ))
+          records.map((rec, i) => (
+            <Lists
+              key={i}
+              records={rec}
+              deleteHandler={deleteHandler}
+              setCurrentId={setCurrentId}
+            />
+          ))
         ) : (
           <div
             style={{
@@ -100,16 +100,20 @@ const Container = styled.div`
   margin: 20px auto;
   padding: 20px;
   display: flex;
+  justify-content: center;
 
   @media (max-width: 768px) {
-    display: block;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
   }
 `;
 const Records = styled.ul`
   list-style-type: none;
-  flex-basis: 60%;
+  /* flex-basis: 50%; */
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: flex-start;
   height: fit-content;
   max-height: 90vh;
@@ -117,7 +121,7 @@ const Records = styled.ul`
   overflow-x: hidden;
   padding-right: 20px;
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 0;
   }
   ::-webkit-scrollbar-track {
     background: #f1f1f1;
